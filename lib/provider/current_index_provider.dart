@@ -9,3 +9,12 @@ class CurrentIndexProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class CurrentCategoryProvider with ChangeNotifier {
+  int currentIndex = 0;
+
+  changeIndex(int newIndex) {
+    currentIndex = newIndex;
+    notifyListeners();
+  }
+}
