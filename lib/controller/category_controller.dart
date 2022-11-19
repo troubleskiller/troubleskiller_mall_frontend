@@ -6,23 +6,24 @@ class CategoryController {
   CategoryController();
   final CategoryService _categoryService = CategoryService();
 
-  Future<List<CategoryModel>> getCategory() async {
+  Future<List<CategoryModel>> getAllCategory() async {
     List<CategoryModel> results = [];
-    Response response = await _categoryService.getCategory();
+    Response response = await _categoryService.getAllCategory();
     // results = CategoryJSON.fromJson(response).page
     // results = CategoryPage.fromJson(CategoryJSON.fromJson(response).page)
+    return results;
+  }
 
-    CategoryJSON categoryJSON = CategoryJSON.fromJson(response.data);
-    print(categoryJSON.toString());
-    print('--------------------------------');
-    CategoryPage categoryPage = CategoryPage.fromJson(categoryJSON.page);
-    print(categoryPage.toString());
-    print('++++++++++++++++++++++++++++++++');
+  Future<List<CategoryModel>> getLevel1Category() async {
+    List<CategoryModel> results = [];
+    Response response = await _categoryService.getLevel1Category();
+
+    CategoryData categoryData = CategoryData.fromJson(response.data);
     CategoryJSONModel categoryJSONModel =
-        CategoryJSONModel.fromJson(categoryPage.list);
-    print(categoryJSONModel.toString());
+        CategoryJSONModel.fromJson(categoryData.data);
     results = categoryJSONModel.result ?? [];
-
+    // results = CategoryJSON.fromJson(response).page
+    // results = CategoryPage.fromJson(CategoryJSON.fromJson(response).page)
     return results;
   }
 }

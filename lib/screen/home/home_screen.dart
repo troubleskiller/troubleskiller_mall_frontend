@@ -10,13 +10,18 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final CategoryController _categoryController = CategoryController();
-  late TabController _tabController;
-  //商品列表（Tab）
+
+  bool isLoadingContent = true;
+
+  //商品列表
   List<CategoryModel> categories = [];
+  List<Tab> categoriesTabs = [];
+
+  int selectedIndex = 0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -25,8 +30,76 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void getCategoryTab() async {
-    categories = await _categoryController.getCategory();
-    _tabController = TabController(length: categories.length, vsync: this);
+    categories = await _categoryController.getLevel1Category();
+    categoriesTabs = categories
+        .map((e) => Tab(
+              text: e.name,
+            ))
+        .toList();
+
+    setState(() {
+      isLoadingContent = false;
+    });
+  }
+
+  Widget _buildTabBar(BuildContext context) {
+    Color primaryColour = Theme.of(context).primaryColor;
+
+    return DefaultTabController(
+      length: categoriesTabs.length,
+      child: Column(
+        children: [
+          Flex(
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                flex: 6,
+                child: TabBar(
+                  isScrollable: true,
+                  labelColor: Colors.white,
+                  indicatorColor: Colors.grey,
+                  indicatorPadding: const EdgeInsets.only(bottom: 0),
+                  onTap: (value) {
+                    setState(() {
+                      selectedIndex = value;
+                    });
+                  },
+                  //controller: tickerTabController,
+                  tabs: categoriesTabs,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                    child: Row(
+                  children: [
+                    Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '分类',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                )),
+              )
+            ],
+          )
+          // Expanded(
+          //   child: TabBarView(children: [
+          //
+          //   ]),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return isLoadingContent
+        ? const CircularProgressIndicator()
+        : _buildTabBar(context);
   }
 
   @override
@@ -34,15 +107,6 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: MainScreenAppBar(),
-        body: GestureDetector(
-          onTap: () {
-            getCategoryTab();
-          },
-          child: Container(
-            height: 100,
-            width: 100,
-            color: Colors.blue,
-          ),
-        ));
+        body: _buildContent());
   }
 }

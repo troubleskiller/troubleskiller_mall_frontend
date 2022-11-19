@@ -27,6 +27,7 @@ class CategoryPage {
 
   CategoryPage(
       this.totalCount, this.pageSize, this.totalPage, this.currPage, this.list);
+
   CategoryPage.fromJson(dynamic json) {
     currPage = json['currPage'];
     totalPage = json['totalPage'];
@@ -38,6 +39,17 @@ class CategoryPage {
   @override
   String toString() {
     return 'CategoryPage{pageSize: $pageSize, totalPage: $totalPage, currPage: $currPage,ssss:$list}';
+  }
+}
+
+class CategoryData {
+  CategoryData({this.code, this.data});
+
+  int? code;
+  dynamic data;
+  CategoryData.fromJson(dynamic json) {
+    code = json['code'];
+    data = json['data'];
   }
 }
 
