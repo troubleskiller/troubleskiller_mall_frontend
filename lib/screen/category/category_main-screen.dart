@@ -163,26 +163,47 @@ class _SideScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '常用分类',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Icon(Icons.abc_outlined)
-                    ],
+                  _SideTabScreen(
+                    categories: secCategories,
                   ),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: secCategories.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3),
-                    itemBuilder: (_, index) {
-                      return Text(secCategories[index].name ?? '');
-                    },
+                  const SizedBox(
+                    height: 10,
                   ),
+                  ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: secCategories.length,
+                      shrinkWrap: true,
+                      itemBuilder: (_, index) {
+                        List<CategoryModel> thirdCategories =
+                            CategoryJSONModel.fromJson(
+                                        secCategories[index].children)
+                                    .result ??
+                                [];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              secCategories[index].name ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: thirdCategories.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              itemBuilder: (_, index) {
+                                return Text(thirdCategories[index].name ?? '');
+                              },
+                            ),
+                          ],
+                        );
+                      }),
                   Container(
                     height: 500,
                     color: Colors.blue,
@@ -191,6 +212,32 @@ class _SideScreen extends StatelessWidget {
               )),
         );
       },
+    );
+  }
+}
+
+class _SideTabScreen extends StatelessWidget {
+  const _SideTabScreen({
+    Key? key,
+    required this.categories,
+  }) : super(key: key);
+
+  final List<CategoryModel> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+          children: categories
+              .map((e) => Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(e.name ?? '')))
+              .toList()),
     );
   }
 }
