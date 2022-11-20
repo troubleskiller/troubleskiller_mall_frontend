@@ -54,17 +54,17 @@ class CategoryData {
 }
 
 class CategoryModel {
-  CategoryModel({
-    this.catId,
-    this.name,
-    this.parentCid,
-    this.catLevel,
-    this.showStatus,
-    this.sort,
-    this.icon,
-    this.productUnit,
-    this.productCount,
-  });
+  CategoryModel(
+      {this.catId,
+      this.name,
+      this.parentCid,
+      this.catLevel,
+      this.showStatus,
+      this.sort,
+      this.icon,
+      this.productUnit,
+      this.productCount,
+      this.children});
 
   CategoryModel.fromJson(dynamic json) {
     catId = json['catId'];
@@ -76,6 +76,7 @@ class CategoryModel {
     icon = json['icon'];
     productUnit = json['productUnit'];
     productCount = json['productCount'];
+    children = json['children'];
   }
 
   int? catId;
@@ -88,6 +89,9 @@ class CategoryModel {
   dynamic productUnit;
   int? productCount;
 
+  //树状结构，三级表
+  dynamic children;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['catId'] = catId;
@@ -99,6 +103,7 @@ class CategoryModel {
     map['icon'] = icon;
     map['productUnit'] = productUnit;
     map['productCount'] = productCount;
+    map['children'] = children;
     return map;
   }
 }

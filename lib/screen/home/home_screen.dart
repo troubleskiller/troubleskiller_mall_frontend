@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:troubleskiller_mall/controller/category_controller.dart';
 import 'package:troubleskiller_mall/model/CategoryModel.dart';
+import 'package:troubleskiller_mall/screen/category/category_main-screen.dart';
 import 'package:troubleskiller_mall/widget/common_widget/common_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,18 +72,23 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) =>
+                              CategoryMainScreen(categories: categories)));
+                    },
                     child: Row(
-                  children: [
-                    Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      '分类',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                )),
+                      children: [
+                        Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          '分类',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
               )
             ],
           )

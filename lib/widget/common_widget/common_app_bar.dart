@@ -14,7 +14,7 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.focusNode,
     this.paddingOverride,
     this.showCancel = true,
-  })  : preferredSize = const Size.fromHeight(80),
+  })  : preferredSize = const Size.fromHeight(50),
         super(key: key);
   final Widget? child;
   final TextEditingController? searchTextController;
@@ -57,12 +57,14 @@ class _SearchAppBarState extends State<SearchAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.transparent,
       elevation: 0,
       titleSpacing: 0,
       // Remove the automatically displayed leading back button
       automaticallyImplyLeading: false,
       title: Container(
-        height: 80,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        height: 50,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -77,7 +79,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                 padding: widget.paddingOverride ??
                     const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 24,
+                      vertical: 10,
                     ),
                 child: TextInputField(
                   controller: widget.searchTextController,
@@ -124,7 +126,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
           ],
         ),
       ),
-      toolbarHeight: 80,
+      toolbarHeight: 50,
     );
   }
 }

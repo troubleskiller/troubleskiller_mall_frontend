@@ -53,7 +53,7 @@ class TextInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color kInputFieldBackgroundColour = Colors.grey;
+    Color kInputFieldBackgroundColour = Colors.white;
     // ColoursBasedOnModes(context).kInputFieldBackgroundColour;
     Color borderColor = Colors.white;
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:troubleskiller_mall/config/index.dart';
 import 'package:troubleskiller_mall/provider/current_index_provider.dart';
-import 'package:troubleskiller_mall/screen/category/category_main-screen.dart';
 import 'package:troubleskiller_mall/screen/home/home_screen.dart';
 import 'package:troubleskiller_mall/screen/shop_cart/shop_cart_screen.dart';
 
@@ -67,7 +66,7 @@ class _IndexScreenState extends State<IndexScreen> {
 
   final List<Widget> tabBodies = [
     HomeScreen(),
-    CategoryMainScreen(),
+    ShopCartScreen(),
     ShopCartScreen(),
     ShopCartScreen(),
   ];
